@@ -6,4 +6,4 @@
 - 在取得SOTA的同时，还反向计算出每种类别的最具代表性的三元组，可以作为理解卷积操作的语义编码过程。
 
 #### 相关工作(2010-2014)
-1. 
+![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/1.png)
