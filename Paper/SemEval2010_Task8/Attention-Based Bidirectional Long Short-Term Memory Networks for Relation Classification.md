@@ -6,4 +6,4 @@
 - 使用双向LSTM不仅仅获取past信息还能获取后向的future信息。引入了attention机制来获取更多的语义信息。
 
 #### 相关工作(2010-2014)
-![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/1.png)
+![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/2.png)
