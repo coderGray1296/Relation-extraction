@@ -39,7 +39,7 @@ def load_raw_data(filename):
     print(FLAGS.max_len)
     return data
 
-
+#建立vocab，用set进行了去重，最后一个单词为PAD_WORD
 def maybe_build_vocab(raw_train_data, raw_test_data, vocab_file):
     '''collect words in sentence'''
     if not os.path.exists(vocab_file):
@@ -75,7 +75,7 @@ def _load_embedding(embed_file, words_file):
 
     return embed, words2id
 
-
+#加载预训练embedding，同时将自己的vocab中的每个词lookup到embedding
 def maybe_trim_embeddings(vocab_file,
                           pretrain_embed_file,
                           pretrain_words_file,
@@ -110,7 +110,8 @@ def maybe_trim_embeddings(vocab_file,
     word_embed, vocab2id = _load_embedding(trimed_embed_file, vocab_file)
     return word_embed, vocab2id
 
-
+#('Raw_Example', 'label, entity1, entity2, [num1, num2, num_sentence_length, ...padding_max_len]')
+#将Raw_Example中的sentence的word对应成id，然后用PAD_WORD对应的id进行填充至最大长度
 def map_words_to_id(raw_data, word2id):
     '''inplace convert sentence from a list of words to a list of ids
     Args:
@@ -126,7 +127,7 @@ def map_words_to_id(raw_data, word2id):
         pad_n = FLAGS.max_len - len(raw_example.sentence)
         raw_example.sentence.extend(pad_n * [pad_id])
 
-
+#搜集词法特征，每个实体所在的前一个词和后一个词组合成一个特征，再将两个实体的特征组合构成一个raw_example的词法特征
 def _lexical_feature(raw_example):
     def _entity_context(e_idx, sent):
         ''' return [w(e-1), w(e), w(e+1)]
@@ -156,7 +157,7 @@ def _lexical_feature(raw_example):
     lexical = context1 + context2
     return lexical
 
-
+#构建相对位置特征，并将相对位置转换成正数
 def _position_feature(raw_example):
     def distance(n):
         '''convert relative distance to positive number
@@ -182,7 +183,7 @@ def _position_feature(raw_example):
 
     return position1, position2
 
-
+#使用tf的example协议，将特征进行封装
 def build_sequence_example(raw_example):
     '''build tf.train.SequenceExample from Raw_Example
     context features : lexical, rid, direction (mtl)
