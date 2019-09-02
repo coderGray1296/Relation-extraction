@@ -16,7 +16,7 @@ def linear_layer(name, x, in_size, out_size, is_regularize=False):
             loss_l2 += tf.nn.l2_loss(w) + tf.nn.l2_loss(b)
         return o, loss_l2
 
-
+#进行三种不同的size卷积，并将结果进行整合，同时将卷积池化后的特征 + 词法特征 返回
 def cnn_forward(name, sent_pos, lexical, num_filters):
     with tf.variable_scope(name):
         input = tf.expand_dims(sent_pos, axis=-1)
@@ -26,6 +26,7 @@ def cnn_forward(name, sent_pos, lexical, num_filters):
         pool_outputs = []
         for filter_size in [3, 4, 5]:
             with tf.variable_scope('conv-%s' % filter_size):
+                #卷积宽度取 input_width
                 conv_weight = tf.get_variable('W1',
                                               [filter_size, input_dim, 1, num_filters],
                                               initializer=tf.truncated_normal_initializer(stddev=0.1))
@@ -42,6 +43,7 @@ def cnn_forward(name, sent_pos, lexical, num_filters):
                                       strides=[1, max_len, 1, 1],
                                       padding='SAME')  # batch_size, 1, 1, num_filters
                 pool_outputs.append(pool)
+        #pools shape [-1, 3 * num_filters]
         pools = tf.reshape(tf.concat(pool_outputs, 3), [-1, 3 * num_filters])
 
         # feature

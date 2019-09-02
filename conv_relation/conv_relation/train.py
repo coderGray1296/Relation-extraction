@@ -3,8 +3,8 @@ import time
 import sys
 import tensorflow as tf
 import numpy as np
-from reader import base as base_reader
-from models import cnn_model
+import cnn_model
+from utils import write_results, inputs
 
 # tf.set_random_seed(0)
 # np.random.seed(0)
@@ -131,12 +131,12 @@ def test(sess, m_valid):
     accuracy, predictions = sess.run(fetches)
     print('accuracy: %.4f' % accuracy)
 
-    base_reader.write_results(predictions, FLAGS.relations_file, FLAGS.results_file)
+    write_results(predictions, FLAGS.relations_file, FLAGS.results_file)
 
 
 def main(_):
     with tf.Graph().as_default():
-        train_data, test_data, word_embed = base_reader.inputs()
+        train_data, test_data, word_embed = inputs()
 
         m_train, m_valid = cnn_model.build_train_valid_model(word_embed,
                                                              train_data, test_data)
