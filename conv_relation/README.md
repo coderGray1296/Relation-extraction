@@ -24,3 +24,7 @@ SemEval 2010 Task 8 [Full Introduction](https://docs.google.com/document/d/1QO_C
 - Tensorflow 1.11+
 ## 复现结果
 根据offical socrer，F1值达到81.34%
+![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/3.png)
+![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/4.png)
+![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/5.png)
+![avatar](https://github.com/coderGray1296/Relation-extraction/blob/master/Pictures/6.png)
